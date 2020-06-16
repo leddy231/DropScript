@@ -1,0 +1,53 @@
+if = (condition, trueblock):{
+    condition ? trueblock() : {}();
+    else = (falseblock):{
+        condition ? {}() : falseblock();
+    };
+};
+
+loop = (block):{
+    controllerDef = {
+        continue = true;
+        break = {
+            continue = false;
+        };
+    };
+    controller = controllerDef();
+    internalLoop = {
+        if(controller.continue, {
+            block(controller);
+            internalLoop();
+        });
+    };
+    internalLoop();
+};
+
+range = (lower, higher):{
+    includes = (number):{
+        return = false;
+        if((number >= lower) && (number <= higher),{
+            return = true;
+        });
+    };
+    excludes = (number):{
+        return = true;
+        if((number >= lower) && (number <= higher),{
+            return = false;
+        });
+    };
+    each = (block):{
+        i = lower;
+        while({return = i <= higher;}, {
+            block(i);
+            i = i + 1;
+        });
+    };
+};
+
+while = (condition, block):{
+    innerloop = {
+        block();
+        if(condition(), innerloop);
+    };
+    if(condition(), innerloop);
+};

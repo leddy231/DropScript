@@ -1,0 +1,7 @@
+print("Welcome!");
+
+x = 1;
+while({return = x < 10;}, {
+    print(x);
+    x = x + 1;
+});

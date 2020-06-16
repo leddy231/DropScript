@@ -1,0 +1,84 @@
+
+
+
+/*
+Part of the DropScript interpreter
+Copyright (C) 2020 Martin Larsson aka leddy231
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+*/
+// newlines are ignored
+// all explicit whitespace are optional
+// operators are syntactic suggar for single argument block execution, ex: 1 + 2 is equal to 1.add(2)
+// !<object> is equal to <object>.not()
+
+
+<program> ::= (<action><semi>)*
+
+<action> ::= <object> <equal> <object>
+           | <object> <qmark> <object> <colon> <object>
+           | <object>
+
+<object> ::= <base>
+           | <object><dot><identifier>
+           | <object><openparen>[<arguments>]<closeparen>
+           | <object> <operator> <object>
+
+<base> ::= <number>
+         | <float>
+         | <string>
+         | <boolean>
+         | <identifier>
+         | <block>
+         | <openparen><action><closeparen>
+         | <not><object>
+
+<block> ::= <openparen>[<blockargs>]<closeparen><colon><openbrace><program><closebrace>
+          | <openbrace><program><closebrace>
+<blockargs> ::= <identifier>(<comma> <identifier>)*
+<arguments> ::= <object>(<comma> <object>)*
+
+<float> ::= <number><dot><number>
+<equal> ::= '='
+<semi> ::= ';'
+<comma> ::= ','
+<not> ::= '!'
+<qmark> ::= '?'
+<colon> ::= ':'
+<dot> ::= '.'
+<closebrace> ::= '}'
+<openbrace> ::= '{'
+<closeparen> ::= ')'
+<openparen> ::= '('
+<identifier> ::= /[a-zA_Z]\w+/
+<number> ::= /\d+/
+<string> ::= /\".*?\"/
+<boolean> ::= 'true'
+            | 'false'
+<operator> ::= '+'
+             | '-'
+             | '*'
+             | '/'
+             | '^'
+             | '%'
+             | '=='
+             | '&&'
+             | '||'
+             | '>'
+             | '<'
+             | '>='
+             | '<='
+             | '!='
+             | '..'
+             | '<>'
+             | '><'
+             | '<<'
